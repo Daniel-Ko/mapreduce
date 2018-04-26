@@ -1,8 +1,8 @@
-from multiprocessing import Pool, TimeoutError
+from multiprocessing import TimeoutError
 from concurrent import futures
 from itertools import repeat
 import argparse
-import os
+from os import path
 
 
 def get_key_val_from_str(key_ind, val_ind, line):
@@ -44,7 +44,7 @@ def parse_and_map(fname, key_ind, val_ind, num_processes, maps_per_node):
     return data
 
 def calculate_num_processes_needed(fname, size_of_node, maps_per_node):
-    bytes_filesize = os.path.getsize(fname)
+    bytes_filesize = path.getsize(fname)
     mb_filesize = (bytes_filesize / 1024.0) / 1024.0
     return -(-(mb_filesize / size_of_node) // maps_per_node) # both sizes are in MB
 
